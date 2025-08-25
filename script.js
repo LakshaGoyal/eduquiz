@@ -1,3 +1,4 @@
+// Listen to "Generate Quiz" button click
 document.getElementById("generateBtn").addEventListener("click", async () => {
     const fileInput = document.getElementById("upload");
     const file = fileInput.files[0];
@@ -7,10 +8,8 @@ document.getElementById("generateBtn").addEventListener("click", async () => {
         return;
     }
 
-    let textContent = "";
-
     if (file.type === "application/pdf") {
-        // ✅ Use PDF.js to extract text
+        // ✅ Handle PDF with PDF.js
         const fileReader = new FileReader();
         fileReader.onload = async function () {
             const typedarray = new Uint8Array(this.result);
@@ -25,17 +24,17 @@ document.getElementById("generateBtn").addEventListener("click", async () => {
                 });
             }
 
-            sendToBackend(extractedText); // ✅ Send extracted text to server
+            sendToBackend(extractedText); // ✅ Send text to backend
         };
         fileReader.readAsArrayBuffer(file);
     } else {
-        // ✅ For plain text file
+        // ✅ Handle plain text file
         const text = await file.text();
         sendToBackend(text);
     }
 });
 
-// ✅ Send extracted text to your Render backend
+// ✅ Function to call backend
 async function sendToBackend(userInput) {
     try {
         const response = await fetch("https://eduquiz-8rqy.onrender.com/api/generate", {
@@ -45,14 +44,15 @@ async function sendToBackend(userInput) {
         });
 
         const data = await response.json();
-        console.log(data);
+        console.log("Backend Response:", data);
 
+        // Show results in output section
         document.getElementById("quizSection").style.display = "block";
         document.getElementById("output").innerText =
-            data.candidates?.[0]?.content || "No quiz generated.";
+            data.candidates?.[0]?.content || "⚠️ No quiz generated.";
     } catch (error) {
         console.error("Error generating quiz:", error);
         document.getElementById("output").innerText =
-            "Error generating quiz. Please try again.";
+            "❌ Error generating quiz. Please try again.";
     }
 }
