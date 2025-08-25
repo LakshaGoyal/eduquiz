@@ -33,10 +33,10 @@ async function handleFile() {
 
     // Call backend (server.js) with extracted text
     try {
-      const response = await fetch("http://localhost:4000/api/generate", {
+      const response = await fetch("https://eduquiz-8rqy.onrender.com/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: textContent }),
+        body: JSON.stringify({ prompt: userInput }),
       });
 
       const data = await response.json();
@@ -56,3 +56,4 @@ async function handleFile() {
 
   reader.readAsArrayBuffer(uploadedFile);
 }
+
