@@ -8,7 +8,7 @@ app.use(express.json());
 
 // ✅ Read from environment (secure on Render/Vercel/Railway)
 // 🔑 Replace fallback with your Gemini API key for local testing
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "AIzaSyB2paGTlZAAxo1s4QufFLiyAGRsFvEHwQA";
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "AIzaSyDxuHN1IJTkoMgOKDeVR_KLLJzwGSg8M2o";
 
 // ✅ Use a valid model + endpoint
 const GEMINI_URL =
@@ -53,6 +53,7 @@ const PORT = process.env.PORT || 4000;
 app.listen(PORT, () =>
   console.log(`✅ Server running at http://localhost:${PORT}`)
 );
+
 
 
 //AIzaSyB2paGTlZAAxo1s4QufFLiyAGRsFvEHwQA
