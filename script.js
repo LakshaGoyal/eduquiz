@@ -1,4 +1,4 @@
-// Listen to "Generate Quiz" button click
+// ✅ Listen to "Generate Quiz" button click
 document.getElementById("generateBtn").addEventListener("click", async () => {
     const fileInput = document.getElementById("upload");
     const file = fileInput.files[0];
@@ -24,7 +24,7 @@ document.getElementById("generateBtn").addEventListener("click", async () => {
                 });
             }
 
-            sendToBackend(extractedText); // ✅ Send text to backend
+            sendToBackend(extractedText); // ✅ Send extracted text to backend
         };
         fileReader.readAsArrayBuffer(file);
     } else {
@@ -46,10 +46,17 @@ async function sendToBackend(userInput) {
         const data = await response.json();
         console.log("Backend Response:", data);
 
-        // Show results in output section
+        // ✅ Show results in output section
         document.getElementById("quizSection").style.display = "block";
-        document.getElementById("output").innerText =
-            data.candidates?.[0]?.content || "⚠️ No quiz generated.";
+
+        // ✅ Try different formats depending on Gemini response
+        let quizText =
+            data.candidates?.[0]?.content?.parts?.[0]?.text || // new Gemini format
+            data.candidates?.[0]?.content ||                   // fallback
+            JSON.stringify(data);                              // raw dump (debug)
+
+        // ✅ Format output a bit cleaner
+        document.getElementById("output").innerText = quizText.trim();
     } catch (error) {
         console.error("Error generating quiz:", error);
         document.getElementById("output").innerText =
