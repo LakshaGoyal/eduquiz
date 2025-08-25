@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduQuiz</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- ✅ PDF.js via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  </script>
+</head>
+<body>
+  <div class="container">
+    <!-- ✅ Header -->
+    <header>
+      <h1>Generate Quiz from PDF</h1>
+      <p>Upload your study material and let AI create questions automatically</p>
+    </header>
+
+    <!-- ✅ Upload Section -->
+    <section class="upload-section">
+      <h2>📘 Upload Study Material</h2>
+      <input type="file" id="upload" accept=".pdf,.txt" />
+      <br><br>
+      <button class="btn btn-primary" id="generateBtn">Convert to Quiz →</button>
+    </section>
+
+    <!-- ✅ Quiz Output Section -->
+    <section class="quiz-section" id="quizSection" style="display:none;">
+      <div class="quiz-header">
+        <h2>📝 Quiz Output</h2>
+      </div>
+      <div class="quiz-content" id="output">
+        <!-- JS injects quiz here -->
+      </div>
+    </section>
+  </div>
+
+  <!-- ✅ Load your script -->
+  <script src="script.js"></script>
+</body>
+</html>
