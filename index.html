@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>EduQuiz</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
 
-  <!-- ✅ PDF.js via CDN -->
+  <!-- PDF.js via CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script>
     pdfjsLib.GlobalWorkerOptions.workerSrc =
@@ -15,32 +15,90 @@
 </head>
 <body>
   <div class="container">
-    <!-- ✅ Header -->
+    <!-- Header -->
     <header>
-      <h1>Generate Quiz from PDF</h1>
-      <p>Upload your study material and let AI create questions automatically</p>
+      <div class="brand-row">
+        <h1>EduQuiz – AI Quiz Generator</h1>
+
+        <!-- Theme Toggle -->
+        <div class="theme-toggle" aria-label="Toggle theme">
+          <input type="checkbox" id="themeSwitch" />
+          <label for="themeSwitch" class="toggle">
+            <span class="sun">☀️</span>
+            <span class="moon">🌙</span>
+          </label>
+        </div>
+      </div>
+      <p class="subtitle">Upload your study material and let AI create questions automatically</p>
     </header>
 
-    <!-- ✅ Upload Section -->
-    <section class="upload-section">
+    <!-- Upload + Settings -->
+    <section class="upload-section teacher-tools">
       <h2>📘 Upload Study Material</h2>
-      <input type="file" id="upload" accept=".pdf,.txt" />
-      <br><br>
-      <button class="btn btn-primary" id="generateBtn">Convert to Quiz →</button>
+      <input type="file" id="upload" accept=".pdf,.txt"/>
+      <div id="fileProgress" class="progress hidden" aria-hidden="true">
+        <div class="progress-bar" id="fileProgressBar" style="width:0%"></div>
+      </div>
+
+      <div class="settings">
+        <h3>⚙️ Settings</h3>
+        <div class="settings-grid">
+          <div class="field">
+            <label for="mcqCount">MCQs</label>
+            <input type="number" id="mcqCount" min="0" max="50" value="5"/>
+          </div>
+          <div class="field">
+            <label for="tfCount">True/False</label>
+            <input type="number" id="tfCount" min="0" max="50" value="3"/>
+          </div>
+          <div class="field">
+            <label for="shortCount">Short Answer</label>
+            <input type="number" id="shortCount" min="0" max="50" value="2"/>
+          </div>
+          <div class="field">
+            <label for="difficulty">Difficulty</label>
+            <select id="difficulty">
+              <option value="easy" selected>Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="generateBtn">Generate Quiz →</button>
+        <button class="btn" id="startQuizBtn" disabled>Start Quiz</button>
+        <button class="btn" id="exportBtn" disabled>Export JSON</button>
+        <button class="btn" id="shareBtn" disabled>Copy Student Link</button>
+      </div>
+      <p class="hint">
+        💡 If backend fails, the built-in <strong>Fallback Generator</strong> will create the quiz.
+      </p>
     </section>
 
-    <!-- ✅ Quiz Output Section -->
+    <!-- Preview / Quiz -->
     <section class="quiz-section" id="quizSection" style="display:none;">
       <div class="quiz-header">
-        <h2>📝 Quiz Output</h2>
+        <h2 id="quizTitle">📝 Quiz Preview</h2>
       </div>
-      <div class="quiz-content" id="output">
-        <!-- JS injects quiz here -->
+
+      <div class="quiz-content" id="output"></div>
+
+      <div class="take-quiz-footer hidden" id="takeQuizFooter">
+        <button class="btn btn-primary" id="submitAnswersBtn">Submit Answers</button>
+        <button class="btn" id="cancelQuizBtn">Cancel</button>
       </div>
     </section>
   </div>
 
-  <!-- ✅ Load your script -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
   <script src="script.js"></script>
 </body>
 </html>
+
+
+
+
+
